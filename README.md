@@ -1,1 +1,1 @@
-# Seminar_Vogelwarte_24_02_2026
+# Seminar Vogelwarte (24-02-2026)
