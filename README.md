@@ -1,0 +1,1 @@
+# Seminar_Vogelwarte_24_02_2026
