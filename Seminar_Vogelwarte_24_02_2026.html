@@ -9,7 +9,7 @@
 <link href="Seminar_Vogelwarte_24_02_2026_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.25">
 
-  <meta name="dcterms.date" content="2026-02-24">
+  <meta name="dcterms.date" content="2026-02-26">
   <title>seminar_vogelwarte_24_02_2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -198,6 +198,7 @@
 <li>Distributed Inference (DI)</li>
 <li>Recursive Inference (RI)</li>
 <li>Partitioning model structures</li>
+<li>Combining Distributed and Recursive Inference</li>
 </ul></li>
 </ul>
 </div>
@@ -481,8 +482,7 @@ x_i \mid x_{-i} \sim
 <section id="friction-boundaries-and-barriers" class="slide level2 smaller">
 <h2>Friction, Boundaries, and Barriers</h2>
 <h3 id="less-common-extensions-of-proper-car-models">Less Common Extensions of Proper CAR Models</h3>
-<p>There are several extensions of the standard areal model that are less well known and less widely used. One crucial component in defining a (P)CAR model is the <strong>adjacency matrix</strong>. Instead of assigning equal weights to all neighboring areas, it is possible to introduce more flexible specifications for the weights.</p>
-<p>Some examples include:</p>
+<p>There are several extensions of the standard areal model that are less well known and less widely used. One crucial component in defining a (P)CAR model is the <strong>adjacency matrix</strong>. Instead of assigning equal weights to all neighboring areas, it is possible to introduce more flexible specifications for the weights. Some examples include:</p>
 <ul>
 <li><strong>Gaussian kernel weights with covariates</strong> (interpreted as friction or permeability driven by covariate differences):
 <ul>
@@ -494,6 +494,11 @@ x_i \mid x_{-i} \sim
 <ul>
 <li><span class="math inline">\(\mathbf{W}_{ij} = \exp(-\lambda_B)\)</span>, if <span class="math inline">\(j \in \mathcal{B}\)</span>; otherwise <span class="math inline">\(\mathbf{W}_{ij} = 1\)</span> or <span class="math inline">\(0\)</span> (fixed).</li>
 <li><span class="math inline">\(\mathbf{W}_{ij} = \exp(-\lambda_B(t))\)</span>, if <span class="math inline">\(j \in \mathcal{B}\)</span>; otherwise <span class="math inline">\(\mathbf{W}_{ij} = 1\)</span> or <span class="math inline">\(0\)</span> (adaptavely).</li>
+</ul></li>
+<li><strong>Model combinations or combined regularization</strong>:
+<ul>
+<li><span class="math inline">\(\sqrt{1-\phi} \cdot \mathbf{x}_{L} + \sqrt{\phi} \cdot \mathbf{x}_{ML}\)</span> (it would require an informative prior in some hyparameters of <span class="math inline">\(\mathbf{x}_{ML}\)</span> to avoid the confounding with <span class="math inline">\(\mathbf{x}_L\)</span>).</li>
+<li><span class="math inline">\(\pi(x \mid \boldsymbol\theta_c, \boldsymbol\theta_1, \boldsymbol\theta_2, \phi) = \pi_L(\mathbf{x} \mid \boldsymbol\theta_c, \boldsymbol\theta_1, \phi) \cdot \pi_{ML}(\mathbf{x} \mid \boldsymbol\theta_c, \boldsymbol\theta_2, \phi)\)</span>, which redefines the precision structure (and therefore the conditional behaviour): <span class="math inline">\(\mathbf{Q}= (1-\phi)\mathbf{Q}_L + \phi\mathbf{Q}_{ML}\)</span>.</li>
 </ul></li>
 </ul>
 </section>
@@ -748,6 +753,9 @@ Updating model information
 <li style="color: red; font-synthesis-weight: auto;">
 <strong>Partitioning model structures</strong>
 </li>
+<li style="color: red; font-synthesis-weight: auto;">
+<strong>Combining Distributed and Recursive Inference</strong>
+</li>
 </ul>
 <li style="color: rgba(0,0,0,0.25); font-style: italic;">
 Implementations
@@ -877,10 +885,6 @@ Conclusions
 \]</span></p>
 <p><strong>This formulation</strong> enables the construction of a distributed and recursive framework in which the <strong>computational burden</strong> associated with evaluating the posterior densities of the latent field <strong>can be substantially reduced</strong>, particularly for <strong>spatial</strong>, <strong>temporal</strong>, and especially <strong>spatio-temporal models</strong>.</p>
 </section>
-<section id="combining-distributed-and-recursive-inference" class="slide level2">
-<h2>Combining Distributed and Recursive Inference</h2>
-<p><img data-src="./Figures/Combined_DI_and_RI.png" class="absolute" style="top: 175px; "></p>
-</section>
 <section id="section-10" class="slide level2 smaller">
 <h2></h2>
 <h3 id="partitioning-algorithms">Partitioning algorithms</h3>
@@ -923,6 +927,10 @@ Conclusions
 <div class="fragment fade-in" data-fragment-index="4">
 <p><img data-src="./Figures/Partitioning_Alg4.png" class="absolute" style="top: 180px; left: 580px; width: 700px; "></p>
 </div>
+</section>
+<section id="combining-distributed-and-recursive-inference" class="slide level2">
+<h2>Combining Distributed and Recursive Inference</h2>
+<p><img data-src="./Figures/Combined_DI_and_RI.png" class="absolute" style="top: 175px; "></p>
 </section></section>
 <section>
 <section id="conclusions" class="title-slide slide level1 center">

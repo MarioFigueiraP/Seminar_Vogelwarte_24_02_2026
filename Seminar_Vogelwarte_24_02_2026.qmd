@@ -79,6 +79,7 @@ The developments in these topics are based on the INLA (*Integrated Nested Lapla
   - Distributed Inference (DI)
   - Recursive Inference (RI)
   - Partitioning model structures
+  - Combining Distributed and Recursive Inference
 
 . . .
 
@@ -359,9 +360,7 @@ $$
 ## Friction, Boundaries, and Barriers {.smaller}
 ### Less Common Extensions of Proper CAR Models
 
-There are several extensions of the standard areal model that are less well known and less widely used. One crucial component in defining a (P)CAR model is the **adjacency matrix**. Instead of assigning equal weights to all neighboring areas, it is possible to introduce more flexible specifications for the weights.
-
-Some examples include:
+There are several extensions of the standard areal model that are less well known and less widely used. One crucial component in defining a (P)CAR model is the **adjacency matrix**. Instead of assigning equal weights to all neighboring areas, it is possible to introduce more flexible specifications for the weights. Some examples include:
 
 - **Gaussian kernel weights with covariates** (interpreted as friction or permeability driven by covariate differences):
   - $\mathbf{W}_{ij} = \exp\!\left(-\frac{1}{2}\frac{(x_i - x_j)^2}{l^2}\right)$,
@@ -372,6 +371,10 @@ Some examples include:
   - $\mathbf{W}_{ij} = \exp(-\lambda_B)$, if $j \in \mathcal{B}$; otherwise $\mathbf{W}_{ij} = 1$ or $0$ (fixed).
   - $\mathbf{W}_{ij} = \exp(-\lambda_B(t))$, if $j \in \mathcal{B}$; otherwise $\mathbf{W}_{ij} = 1$ or $0$ (adaptavely).
 
+- **Model combinations or combined regularization**:
+  - $\sqrt{1-\phi} \cdot \mathbf{x}_{L} + \sqrt{\phi} \cdot \mathbf{x}_{ML}$ (it would require an informative prior in some hyparameters of $\mathbf{x}_{ML}$ to avoid the confounding with $\mathbf{x}_L$).
+  - $\pi(x \mid \boldsymbol\theta_c, \boldsymbol\theta_1, \boldsymbol\theta_2, \phi) = \pi_L(\mathbf{x} \mid \boldsymbol\theta_c, \boldsymbol\theta_1, \phi) \cdot \pi_{ML}(\mathbf{x} \mid \boldsymbol\theta_c, \boldsymbol\theta_2, \phi)$, which redefines the precision structure (and therefore the conditional behaviour): $\mathbf{Q}= (1-\phi)\mathbf{Q}_L + \phi\mathbf{Q}_{ML}$.
+  
 ## Friction, Boundaries, and Barriers {.smaller}
 ### Examples with Gaussian kernel weights with covariates
 
@@ -599,6 +602,7 @@ $$
     <li style="color: red; font-synthesis-weight: auto;"> <strong>Distributed Inference (DI)</strong> </li>
     <li style="color: red; font-synthesis-weight: auto;"> <strong>Recursive Inference (RI)</strong> </li>
     <li style="color: red; font-synthesis-weight: auto;"> <strong>Partitioning model structures</strong> </li>
+    <li style="color: red; font-synthesis-weight: auto;"> <strong>Combining Distributed and Recursive Inference</strong> </li>
   </ul>
   <li style="color: rgba(0,0,0,0.25); font-style: italic;">Implementations</li>
   <li style="color: rgba(0,0,0,0.25); font-style: italic;">Conclusions</li>
@@ -701,10 +705,10 @@ However, within a distributed framework, accurately computing marginal posterior
 
 ## Recursive Inference 
 
-Following the structure used to present the methodological details of INLA, we describe the proposed recursive inference approach based on INLA, building on the distributed framework introduced above. The discussion therefore focuses on: 
+Following the structure used to present the methodological details of INLA, we describe the proposed recursive inference approach based on INLA, building on the distributed framework introduced above. The discussion therefore focuses on:
 
 - the **computation of the conditional posterior of the latent field** and 
-- the **marginal posterior of the latent field**. 
+- the **marginal posterior of the latent field**.
 
 The joint marginal and marginal posterior distributions of the hyperparameters are omitted, as they are obtained using the same strategies as in the distributed setting. Notably, any distributed framework can be applied recursively, allowing the distributed inference approach to be used directly for recursive inference.
 
@@ -763,12 +767,6 @@ $$
 
 **This formulation** enables the construction of a distributed and recursive framework in which the **computational burden** associated with evaluating the posterior densities of the latent field **can be substantially reduced**, particularly for **spatial**, **temporal**, and especially **spatio-temporal models**.
 
-## Combining Distributed and Recursive Inference 
-
-![](./Figures/Combined_DI_and_RI.png){.absolute top="175"}
-
----
-
 ## {.smaller}
 ### Partitioning algorithms
 
@@ -811,6 +809,10 @@ The fundamental basis for defining partitioning algorithms lies in the precision
 :::{.fragment .fade-in fragment-index="4"}
 ![](./Figures/Partitioning_Alg4.png){.absolute top="180" left="580" width="700"}
 :::
+
+## Combining Distributed and Recursive Inference 
+
+![](./Figures/Combined_DI_and_RI.png){.absolute top="175"}
 
 # Conclusions
 
